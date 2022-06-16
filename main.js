@@ -1,60 +1,37 @@
-function a() {
-  return new Promise((resolve) => {
+function a (number) {
+  return new Promise((resolve, reject) => {
+    if (number > 4) {
+      reject() // 이행 되지 않았을 때 또는 에러 발생시 실행
+      return
+    }
     setTimeout(() => {
       console.log('A')
-      resolve() 
+      resolve() // 이행 되었을시 실행
     }, 1000)
   })
 }
 
-function b() {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      console.log('B')
-      resolve() 
-    }, 1000)
-  })
-}
-
-function c() {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      console.log('C')
-      resolve() 
-    }, 1000)
-  })
-}
-
-function d() {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      console.log('D')
-      resolve() 
-    }, 1000)
-  })
-}
-
-// 비추천
-// function test() {
-//   a().then(() => {
-//     b().then(() => {
-//       c().then(() => {
-//         d().then(() => {
-//           console.log('Done!')
-//         })
-//       })
-//     })
+async function test() {
+//   a(2)
+//   .then(() => {
+//     console.log('Resolve!')
+//   })
+//   .catch(() => {
+//     console.log('Reject!')
+//   })
+//   .finally(() => {
+//     console.log('Done!') // resolve 가 실행되지 않더라도 코드 자체가 실행이 되었다면 출력
 //   })
 // }
-// test() 
 
-function test() {
-  a()
-    .then(() => b())
-    .then(() => c())
-    .then(() => d())
-    .then(() => {
-    console.log('Done!')
-  })
+// try catch 버너
+try {
+  await a(8)
+  console.log('Resolve!')
+} catch (error) {
+  console.log('Reject!')
+} finally {
+  console.log('Done!')
+  } 
 }
 test()
