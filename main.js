@@ -1,37 +1,34 @@
-function a (number) {
-  return new Promise((resolve, reject) => {
-    if (number > 4) {
-      reject() // 이행 되지 않았을 때 또는 에러 발생시 실행
-      return
+function fetchMovies(title) {
+  // 대기(pending): 이행하거나 거부되지 않은 초기 상태.
+  const OMDB_API_KEY = '7035c60b'
+  return new Promise(async (resolve, reject) => {
+    try {
+      const res = await axios.get(`https://omdbapi.com?apikey=${OMDB_API_KEY}&s=${title}`)
+      // 이행(fulfilled): 연산이 성공적으로 완료됨.
+      resolve(res)
+    } catch (hello) {
+      console.log(hello.message)
+      // 거부(rejected): 연산이 실패함.
+      reject('HEROPY?!')
     }
-    setTimeout(() => {
-      console.log('A')
-      resolve() // 이행 되었을시 실행
-    }, 1000)
   })
 }
 
 async function test() {
-//   a(2)
-//   .then(() => {
-//     console.log('Resolve!')
-//   })
-//   .catch(() => {
-//     console.log('Reject!')
-//   })
-//   .finally(() => {
-//     console.log('Done!') // resolve 가 실행되지 않더라도 코드 자체가 실행이 되었다면 출력
-//   })
-// }
-
-// try catch 버너
-try {
-  await a(8)
-  console.log('Resolve!')
-} catch (error) {
-  console.log('Reject!')
-} finally {
-  console.log('Done!')
-  } 
+  try {
+    const res = await fetchMovies('frozen')
+    console.log(res)
+  } catch (heropy) {
+    console.log(heropy)
+  }
 }
+
 test()
+
+function hello() {
+  fetchMovies('jobs')
+  .then(res => console.log(res))
+  .catch((heropy) => { console.log(heropy)})
+}
+
+hello()
